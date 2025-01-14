@@ -1,11 +1,10 @@
-// https://dimikoj.com/problems/49/is-prime
 #include <bits/stdc++.h>
 using namespace std;
 #define fastread() (ios_base::sync_with_stdio(false), cin.tie(NULL))
 #define endl '\n'
-typedef long long int ll;
+typedef long long ll;
 
-const int N = 1000000;
+const int N = 100000000;
 bitset<N + 1> isPrime;
 // vector<bool> isPrime(N + 1, 1);
 vector<int> primes;
@@ -26,37 +25,27 @@ void sieveOfEratosthenes() {
 }
 
 void solve() {
-  ll n;
+  int n;
   cin >> n;
 
-  if (n <= N) {
-    if (isPrime[n])
-      cout << n << " is a prime" << endl;
-    else
-      cout << n << " is not a prime" << endl;
-    return;
-  }
+  int phi = n;
 
-  int sq = sqrt(n);
-  bool prime = true;
   for (int p : primes) {
-    if (p > sq) break;
+    if ((ll)p * p > n) break;
     if (n % p == 0) {
-      prime = false;
-      break;
+      while (n % p == 0) n /= p;
+      phi *= (1 - 1.0 / p);
     }
   }
 
-  if (prime)
-    cout << n << " is a prime" << endl;
-  else
-    cout << n << " is not a prime" << endl;
+  cout << (n > 1 ? phi * (1 - 1.0 / n) : phi) << endl;
 }
 
 int main() {
-  // fastread();
+  fastread();
   sieveOfEratosthenes();
-  int t;
+  int t = 1;
   cin >> t;
   while (t--) solve();
+  return 0;
 }

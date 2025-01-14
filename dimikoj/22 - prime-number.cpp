@@ -9,33 +9,29 @@ int n = 100000;
 bool isPrime[100000];
 
 int sieveOfEratosthenes() {
-    for (int i = 2; i <= n; i++)
-        isPrime[i] = true;
-    isPrime[1] = false;
+  for (int i = 2; i <= n; i++) isPrime[i] = true;
+  isPrime[1] = false;
 
-    for (int i = 2; i * i <= n; i++)
-        if (isPrime[i])
-            for (int j = i * i; j <= n; j += i)
-                isPrime[j] = false;
+  for (int i = 2; i * i <= n; i++)
+    if (isPrime[i])
+      for (int j = i * i; j <= n; j += i) isPrime[j] = false;
 }
 
 void solve() {
-    int a, b;
-    cin >> a >> b;
+  int a, b;
+  cin >> a >> b;
 
-    int count(0);
-    for (int i = a; i <= b; i++)
-        if (isPrime[i])
-            count++;
+  int count(0);
+  for (int i = a; i <= b; i++)
+    if (isPrime[i]) count++;
 
-    cout << count << endl;
+  cout << count << endl;
 }
 
 int main() {
-    // fastread();
-    sieveOfEratosthenes();
-    int t = 1;
-    cin >> t;
-    while (t--)
-        solve();
+  // fastread();
+  sieveOfEratosthenes();
+  int t = 1;
+  cin >> t;
+  while (t--) solve();
 }

@@ -2,57 +2,62 @@
 using namespace std;
 typedef pair<int, int> pii;
 
-void dijkstra(int n, vector<vector<pii>>& graph, int s) {
-    vector<int> dist(n + 1, INT_MAX);
-    dist[s] = 0;
+void dijkstra(int n, vector<pii> adjacents[], int s) {
+  vector<int> distance(n + 1, INT_MAX);
+  vector<bool> visited(n + 1, false);
+  distance[s] = 0;
 
-    // min-heap priority queue
-    priority_queue<pii, vector<pii>, greater<pii>> pq;
-    pq.push({0, s});
+  // min-heap
+  priority_queue<pii, vector<pii>, greater<pii>> pq;
+  pq.push({0, s});
 
-    while (!pq.empty()) {
-        int u = pq.top().second;
-        int d = pq.top().first;
-        pq.pop();
+  while (!pq.empty()) {
+    int u = pq.top().second;
+    int d = pq.top().first;
+    pq.pop();
 
-        if (d > dist[u]) continue;
+    if (visited[u]) continue;
+    visited[u] = true;
 
-        for (auto& neighbor : graph[u]) {
-            int v = neighbor.first;
-            int weight = neighbor.second;
+    for (auto& neighbor : adjacents[u]) {
+      int v = neighbor.first;
+      int w = neighbor.second;
 
-            if (dist[u] + weight < dist[v]) {
-                dist[v] = dist[u] + weight;
-                pq.push({dist[v], v});
-            }
-        }
+      // Relaxation
+      if (!visited[v] && distance[u] + w < distance[v]) {
+        distance[v] = distance[u] + w;
+        pq.push({distance[v], v});
+      }
     }
+  }
 
-    for (int i = 1; i <= n; i++)
-        if (i != s) cout << (dist[i] == INT_MAX ? -1 : dist[i]) << " ";
+  for (int i = 1; i <= n; i++)
+    if (i != s) cout << (distance[i] == INT_MAX ? -1 : distance[i]) << " ";
 
-    cout << endl;
+  cout << endl;
 }
 
 int main() {
-    int t;
-    cin >> t;
-    while (t--) {
-        int n, m;
-        cin >> n >> m;
+  int t;
+  cin >> t;
+  while (t--) {
+    int n, m;
+    cin >> n >> m;
 
-        vector<vector<pii>> graph(n + 1);
+    vector<pii> adjacents[n + 1];
 
-        for (int i = 0; i < m; i++) {
-            int u, v, w;
-            cin >> u >> v >> w;
-            graph[u].push_back({v, w});
-            graph[v].push_back({u, w});
-        }
-
-        int s;
-        cin >> s;
-
-        dijkstra(n, graph, s);
+    for (int i = 0; i < m; i++) {
+      int u, v, w;
+      cin >> u >> v >> w;
+      adjacents[u].push_back({v, w});
+      adjacents[v].push_back({u, w});
     }
+
+    int s;
+    cin >> s;
+
+    dijkstra(n, adjacents, s);
+  }
+
+  return 0;
 }
