@@ -17,14 +17,15 @@ int main() {
     double left = 0, right = PI;
     while (left <= right) {
       double mid = (left + right) / 2;
-      double r = newL / mid;
-      double d = r * sin(mid / 2);
+      double r = newL / mid;  // r is the estimated radius of the circle with
+                              // the arc length newL and angle mid
+      double d = 2 * r * sin(mid / 2);  // d is the estimated length of the rod
 
-      if (abs(d - (L / 2)) < eps) {
+      if (abs(d - L) < eps) {
         h = r - r * cos(mid / 2);
         break;
       }
-      if (d > (L / 2))
+      if (d > L)
         left = mid;
       else
         right = mid;

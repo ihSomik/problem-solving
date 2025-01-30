@@ -11,7 +11,7 @@ int main() {
     for (int i = 0; i < n; i++) cin >> p[i];
 
     sort(p, p + n);
-    int median = p[n / 2];
+    int median = p[n / 2]; 
 
     ll cost(0);
     for (int t : p) cost += abs(t - median);
