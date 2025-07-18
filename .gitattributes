@@ -1,2 +1,3 @@
 # Force GitHub to classify .sql files as SQL
 *.sql linguist-language=SQL
+leetcode/database/*.sql linguist-language=SQL
