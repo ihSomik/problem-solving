@@ -1,0 +1,1 @@
+select * from Goals where goals_scored = (select max(goals_scored) from Goals);
